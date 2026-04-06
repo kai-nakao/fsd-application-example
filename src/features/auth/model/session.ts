@@ -13,7 +13,7 @@ export async function setSessionUserId(userId: string): Promise<void> {
     httpOnly: true,
     path: "/",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: 60 * 60 * 24 * 7,
   });
 }
 
