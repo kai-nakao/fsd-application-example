@@ -41,6 +41,14 @@ export type DbTask = {
   updatedAt: string;
 };
 
+export type DbComment = {
+  id: string;
+  taskId: string;
+  authorId: string;
+  body: string;
+  createdAt: string;
+};
+
 export const db = {
   users: [
     {
@@ -146,4 +154,28 @@ export const db = {
       updatedAt: "2026-03-18T10:00:00Z",
     },
   ] as DbTask[],
+
+  comments: [
+    {
+      id: "comment-1",
+      taskId: "task-1",
+      authorId: "user-2",
+      body: "shared/ui の Button と Card ができました。レビューお願いします。",
+      createdAt: "2026-03-04T10:00:00Z",
+    },
+    {
+      id: "comment-2",
+      taskId: "task-1",
+      authorId: "user-1",
+      body: "LGTM! Badge コンポーネントも追加してもらえますか？",
+      createdAt: "2026-03-04T11:30:00Z",
+    },
+    {
+      id: "comment-3",
+      taskId: "task-2",
+      authorId: "user-1",
+      body: "User エンティティは完了。次は Project を進めてください。",
+      createdAt: "2026-03-20T09:00:00Z",
+    },
+  ] as DbComment[],
 };

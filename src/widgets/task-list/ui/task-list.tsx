@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTasksByProject, TaskCard } from "@entities/task";
 import { getProjectMembers } from "@entities/project";
 import { getUserById } from "@entities/user";
@@ -5,6 +6,7 @@ import { CreateTaskForm } from "@features/create-task";
 import { TaskStatusSelect } from "@features/update-task-status";
 import { DeleteTaskButton } from "@features/delete-task";
 import { AssignTaskSelect } from "@features/assign-task";
+import { ROUTES } from "@shared/config";
 import type { User } from "@entities/user";
 
 type TaskListProps = {
@@ -35,6 +37,14 @@ export async function TaskList({ projectId }: TaskListProps) {
             <TaskCard
               key={task.id}
               task={task}
+              titleSlot={
+                <Link
+                  href={ROUTES.TASK_DETAIL(projectId, task.id)}
+                  className="text-sm font-semibold leading-tight hover:underline"
+                >
+                  {task.title}
+                </Link>
+              }
               actionSlot={
                 <div className="flex items-center gap-2">
                   <AssignTaskSelect

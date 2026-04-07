@@ -7,14 +7,15 @@ import { TaskPriorityBadge } from "./task-priority-badge";
 
 type TaskCardProps = {
   task: Task;
+  titleSlot?: ReactNode;
   actionSlot?: ReactNode;
 };
 
-export function TaskCard({ task, actionSlot }: TaskCardProps) {
+export function TaskCard({ task, titleSlot, actionSlot }: TaskCardProps) {
   return (
     <Card className="flex flex-col gap-3">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm font-semibold leading-tight">{task.title}</h3>
+        {titleSlot ?? <h3 className="text-sm font-semibold leading-tight">{task.title}</h3>}
         <div className="flex shrink-0 gap-1.5">
           <TaskPriorityBadge priority={task.priority} />
           <TaskStatusBadge status={task.status} />
