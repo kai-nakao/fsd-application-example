@@ -7,9 +7,11 @@ import { MemberListSkeleton } from "./member-list-skeleton";
 
 type ProjectDashboardProps = {
   projectId: string;
+  filterStatus?: string;
+  filterPriority?: string;
 };
 
-export async function ProjectDashboard({ projectId }: ProjectDashboardProps) {
+export async function ProjectDashboard({ projectId, filterStatus, filterPriority }: ProjectDashboardProps) {
   const project = await getProjectById(projectId);
   if (!project) return <p>プロジェクトが見つかりません</p>;
 
@@ -22,7 +24,7 @@ export async function ProjectDashboard({ projectId }: ProjectDashboardProps) {
 
       <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
         <Suspense fallback={<TaskListSkeleton />}>
-          <TaskList projectId={projectId} />
+          <TaskList projectId={projectId} filterStatus={filterStatus} filterPriority={filterPriority} />
         </Suspense>
 
         <Suspense fallback={<MemberListSkeleton />}>
