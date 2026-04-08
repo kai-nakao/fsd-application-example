@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { deleteComment } from "@entities/comment";
+import { eventTracker } from "@shared/api";
 import { ROUTES } from "@shared/config";
 
 export async function deleteCommentAction(
@@ -10,5 +11,8 @@ export async function deleteCommentAction(
   taskId: string,
 ) {
   await deleteComment(commentId);
+
+  eventTracker.track({ name: "comment_deleted", properties: { commentId } });
+
   revalidatePath(ROUTES.TASK_DETAIL(projectId, taskId));
 }

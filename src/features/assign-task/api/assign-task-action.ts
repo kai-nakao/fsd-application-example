@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { assignTask } from "@entities/task";
 import { getUserById } from "@entities/user";
-import { emailSender } from "@shared/api";
+import { emailSender, eventTracker } from "@shared/api";
 import { ROUTES } from "@shared/config";
 
 export async function assignTaskAction(
@@ -12,6 +12,8 @@ export async function assignTaskAction(
   projectId: string,
 ) {
   await assignTask(taskId, assigneeId);
+
+  eventTracker.track({ name: "task_assigned", properties: { taskId, assigneeId } });
 
   const assignee = await getUserById(assigneeId);
   if (assignee) {

@@ -5,5 +5,10 @@ export type TrackEvent = {
 
 export type EventTracker = {
   track(event: TrackEvent): void;
+};
+
+export type UserIdentifier = {
   identify(userId: string, traits?: Record<string, string>): void;
 };
+
+export type AnalyticsService = EventTracker & UserIdentifier;

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createTask, type TaskPriority } from "@entities/task";
+import { eventTracker } from "@shared/api";
 import { ROUTES } from "@shared/config";
 
 export async function createTaskAction(formData: FormData) {
@@ -12,12 +13,14 @@ export async function createTaskAction(formData: FormData) {
 
   if (!projectId || !title?.trim()) return;
 
-  await createTask({
+  const task = await createTask({
     title: title.trim(),
     description: description?.trim() ?? "",
     priority,
     projectId,
   });
+
+  eventTracker.track({ name: "task_created", properties: { projectId, taskId: task.id } });
 
   revalidatePath(ROUTES.PROJECT_DETAIL(projectId));
 }

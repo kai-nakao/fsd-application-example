@@ -1,6 +1,6 @@
-import type { EventTracker } from "./types";
+import type { AnalyticsService } from "./types";
 
-export const mockEventTracker: EventTracker = {
+export const mockEventTracker: AnalyticsService = {
   track(event) {
     console.log(`[Mock分析] Event: ${event.name}`, event.properties ?? "");
   },

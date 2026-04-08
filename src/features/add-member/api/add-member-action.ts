@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { addProjectMember, type ProjectRole } from "@entities/project";
 import { getUserById } from "@entities/user";
-import { emailSender } from "@shared/api";
+import { emailSender, eventTracker } from "@shared/api";
 import { ROUTES } from "@shared/config";
 
 export async function addMemberAction(formData: FormData) {
@@ -14,6 +14,8 @@ export async function addMemberAction(formData: FormData) {
   if (!projectId || !userId) return;
 
   await addProjectMember(projectId, userId, role);
+
+  eventTracker.track({ name: "member_added", properties: { projectId, userId, role } });
 
   const user = await getUserById(userId);
   if (user) {
