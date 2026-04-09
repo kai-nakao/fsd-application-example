@@ -6,4 +6,5 @@ export {
   type Task,
   type TaskStatus,
   type TaskPriority,
+  type TaskAttachment,
 } from "./types";

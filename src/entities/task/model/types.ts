@@ -37,3 +37,13 @@ export type Task = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TaskAttachment = {
+  id: string;
+  taskId: string;
+  fileName: string;
+  fileKey: string;
+  fileUrl: string;
+  uploadedBy: string;
+  createdAt: string;
+};

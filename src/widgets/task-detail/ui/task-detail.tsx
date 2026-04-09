@@ -1,10 +1,12 @@
-import { getTaskById, TaskStatusBadge, TaskPriorityBadge } from "@entities/task";
+import { getTaskById, TaskStatusBadge, TaskPriorityBadge, getAttachmentsByTask, AttachmentItem } from "@entities/task";
 import { getUserById, UserAvatar } from "@entities/user";
 import { getCommentsByTask, CommentItem } from "@entities/comment";
 import { TaskStatusSelect } from "@features/update-task-status";
 import { DeleteTaskButton } from "@features/delete-task";
 import { CreateCommentForm } from "@features/create-comment";
 import { DeleteCommentButton } from "@features/delete-comment";
+import { UploadTaskFileForm } from "@features/upload-task-file";
+import { DeleteTaskFileButton } from "@features/delete-task-file";
 import { formatDate } from "@shared/lib";
 
 type TaskDetailProps = {
@@ -13,9 +15,10 @@ type TaskDetailProps = {
 };
 
 export async function TaskDetail({ taskId, projectId }: TaskDetailProps) {
-  const [task, comments] = await Promise.all([
+  const [task, comments, attachments] = await Promise.all([
     getTaskById(taskId),
     getCommentsByTask(taskId),
+    getAttachmentsByTask(taskId),
   ]);
 
   if (!task) return <p className="text-sm text-zinc-500">タスクが見つかりません</p>;
@@ -49,7 +52,35 @@ export async function TaskDetail({ taskId, projectId }: TaskDetailProps) {
         </div>
       </div>
 
-      {/* コメント一覧 */}
+      {/* 添付ファイル */}
+      <section className="flex flex-col gap-3">
+        <h3 className="text-sm font-bold">添付ファイル ({attachments.length})</h3>
+
+        {attachments.length === 0 ? (
+          <p className="text-xs text-zinc-400">添付ファイルはありません</p>
+        ) : (
+          <div className="flex flex-col gap-2">
+            {attachments.map((attachment) => (
+              <AttachmentItem
+                key={attachment.id}
+                attachment={attachment}
+                actionSlot={
+                  <DeleteTaskFileButton
+                    attachmentId={attachment.id}
+                    fileKey={attachment.fileKey}
+                    projectId={projectId}
+                    taskId={taskId}
+                  />
+                }
+              />
+            ))}
+          </div>
+        )}
+
+        <UploadTaskFileForm taskId={taskId} projectId={projectId} />
+      </section>
+
+      {/* コメント���覧 */}
       <section className="flex flex-col gap-3">
         <h3 className="text-sm font-bold">コメント ({comments.length})</h3>
 

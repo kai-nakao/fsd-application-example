@@ -49,6 +49,16 @@ export type DbComment = {
   createdAt: string;
 };
 
+export type DbTaskAttachment = {
+  id: string;
+  taskId: string;
+  fileName: string;
+  fileKey: string;
+  fileUrl: string;
+  uploadedBy: string;
+  createdAt: string;
+};
+
 export const db = {
   users: [
     {
@@ -178,4 +188,34 @@ export const db = {
       createdAt: "2026-03-20T09:00:00Z",
     },
   ] as DbComment[],
+
+  taskAttachments: [
+    {
+      id: "attachment-1",
+      taskId: "task-1",
+      fileName: "shared-layer-design.pdf",
+      fileKey: "tasks/task-1/shared-layer-design.pdf",
+      fileUrl: "/mock-storage/tasks/task-1/shared-layer-design.pdf",
+      uploadedBy: "user-1",
+      createdAt: "2026-03-02T10:00:00Z",
+    },
+    {
+      id: "attachment-2",
+      taskId: "task-1",
+      fileName: "ui-components-list.xlsx",
+      fileKey: "tasks/task-1/ui-components-list.xlsx",
+      fileUrl: "/mock-storage/tasks/task-1/ui-components-list.xlsx",
+      uploadedBy: "user-2",
+      createdAt: "2026-03-03T14:00:00Z",
+    },
+    {
+      id: "attachment-3",
+      taskId: "task-2",
+      fileName: "entity-er-diagram.png",
+      fileKey: "tasks/task-2/entity-er-diagram.png",
+      fileUrl: "/mock-storage/tasks/task-2/entity-er-diagram.png",
+      uploadedBy: "user-1",
+      createdAt: "2026-03-20T11:00:00Z",
+    },
+  ] as DbTaskAttachment[],
 };
