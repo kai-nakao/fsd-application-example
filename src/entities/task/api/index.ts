@@ -6,6 +6,9 @@ export {
   updateTaskStatus,
   assignTask,
   deleteTask,
+  getAttachmentsByTask,
+  createAttachment,
+  deleteAttachment,
 } from "./task-api";
 
 export { taskQueries } from "./task.queries";

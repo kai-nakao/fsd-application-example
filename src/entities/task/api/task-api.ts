@@ -1,5 +1,5 @@
 import { db } from "@shared/api/db";
-import type { Task, TaskStatus, TaskPriority } from "../model";
+import type { Task, TaskStatus, TaskPriority, TaskAttachment } from "../model";
 
 export async function getTasks(): Promise<Task[]> {
   return db.tasks;
@@ -60,5 +60,32 @@ export async function deleteTask(id: string): Promise<boolean> {
   const index = db.tasks.findIndex((t) => t.id === id);
   if (index === -1) return false;
   db.tasks.splice(index, 1);
+  return true;
+}
+
+export async function getAttachmentsByTask(taskId: string): Promise<TaskAttachment[]> {
+  return db.taskAttachments.filter((a) => a.taskId === taskId);
+}
+
+export async function createAttachment(
+  data: Omit<TaskAttachment, "id" | "createdAt">,
+): Promise<TaskAttachment> {
+  const attachment: TaskAttachment = {
+    id: `attachment-${Date.now()}`,
+    taskId: data.taskId,
+    fileName: data.fileName,
+    fileKey: data.fileKey,
+    fileUrl: data.fileUrl,
+    uploadedBy: data.uploadedBy,
+    createdAt: new Date().toISOString(),
+  };
+  db.taskAttachments.push(attachment);
+  return attachment;
+}
+
+export async function deleteAttachment(id: string): Promise<boolean> {
+  const index = db.taskAttachments.findIndex((a) => a.id === id);
+  if (index === -1) return false;
+  db.taskAttachments.splice(index, 1);
   return true;
 }

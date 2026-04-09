@@ -6,6 +6,7 @@ export {
   type Task,
   type TaskStatus,
   type TaskPriority,
+  type TaskAttachment,
 } from "./model";
 
 export {
@@ -16,7 +17,10 @@ export {
   updateTaskStatus,
   assignTask,
   deleteTask,
+  getAttachmentsByTask,
+  createAttachment,
+  deleteAttachment,
   taskQueries,
 } from "./api";
 
-export { TaskCard, TaskStatusBadge, TaskPriorityBadge } from "./ui";
+export { TaskCard, TaskStatusBadge, TaskPriorityBadge, AttachmentItem } from "./ui";
